@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = "mongodb+srv://school:student123@cluster0.64833pk.mongodb.net/langar"
+}
+
+model Langar {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  imgUrl    String
+  puri      Boolean  @default(false)
+  roti      Boolean  @default(false)
+  dal       Boolean  @default(false)
+  kadi      Boolean  @default(false)
+  chhole    Boolean  @default(false)
+  chawal    Boolean  @default(false)
+  biryani   Boolean  @default(false)
+  kaddu     Boolean  @default(false)
+  halwa     Boolean  @default(false)
+  kheer     Boolean  @default(false)
+  paneer    Boolean  @default(false)
+  gobhi     Boolean  @default(false)
+  aloo      Boolean  @default(false)
+  name      String
+  address   String
+  time      String
+  state     String
+  district  String
+  pincode   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
