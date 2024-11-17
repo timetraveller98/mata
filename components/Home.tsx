@@ -6,10 +6,8 @@ import DistrictState from "@/app/utils/state.json";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { getStorage, deleteObject, ref, listAll } from "firebase/storage";
 import app from "@/app/libs/firebase";
-interface LangarProps {
-  langars: Langar[];
-}
-const Details: React.FC<LangarProps> = ({ langars }) => {
+
+const Details= ({ langars }:any) => {
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
   const filtered = langars.filter((langar: any) => {
@@ -38,7 +36,7 @@ const Details: React.FC<LangarProps> = ({ langars }) => {
 
     const deleteImage = async () => {
       try {
-        const existingImageUrls = langars.filter(item => item.imgUrl).map(item => item.imgUrl);
+        const existingImageUrls = langars.filter((item:any) => item.imgUrl).map((item:any )=> item.imgUrl);
         const storage = getStorage(app);
         const storageRef = ref(storage, '');
         const allImages = await listAll(storageRef);
@@ -128,7 +126,7 @@ const Details: React.FC<LangarProps> = ({ langars }) => {
               </div>
             </Col>
           ) : (
-            filtered.map((item) => (
+            filtered.map((item:any) => (
               <Col md={4} key={item.id}>
                 <div className="border shadow bg-blue-50 p-3 my-3 rounded">
                   <div className="flex justify-center items-center">
