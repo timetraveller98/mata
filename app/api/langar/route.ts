@@ -1,6 +1,5 @@
 import { db } from "@/app/libs/db";
 import { NextResponse } from "next/server";
-import { NextApiRequest, NextApiResponse } from "next";
 export async function POST(req: any) {
   try {
     const body = await req.json();
@@ -63,3 +62,15 @@ export async function POST(req: any) {
   }
 }
 
+// GET API
+export async function GET() {
+  try {
+    const data = await db.langar.findMany();
+    return NextResponse.json({ data, success: true });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
+  }
+}

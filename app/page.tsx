@@ -1,16 +1,9 @@
 import { Container, Row, Col } from "react-bootstrap";
-import getLangar from "@/actions/getLangar";
 import Details from "@/components/Details";
 import { NextPage } from "next";
 
-const Home: NextPage = async () => {
-  let langars = [];
+const Home: NextPage = () => {
 
-  try {
-    langars = await getLangar();
-  } catch (error) {
-    console.error("Error fetching langars:", error);
-  }
 
   return (
     <div>
@@ -27,7 +20,7 @@ const Home: NextPage = async () => {
       <Container fluid>
         <Row>
           <Col md={12}>
-            <Details langars={langars} />
+            <Details />
           </Col>
         </Row>
       </Container>

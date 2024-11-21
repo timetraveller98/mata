@@ -1,36 +1,53 @@
 "use client";
 
-import { Langar } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import DistrictState from "@/app/utils/state.json";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { getStorage, deleteObject, ref, listAll } from "firebase/storage";
 import app from "@/app/libs/firebase";
+import axios from "axios";
+import { Langar } from "@prisma/client";
 
-interface LangarProps {
-  langars: Langar[];
-}
-
-const Details: React.FC<LangarProps> = ({ langars }) => {
+const Details = () => {
+  const [langars, setLangars] = useState<Langar[]>([]);
   const [state, setState] = useState<string>("");
   const [district, setDistrict] = useState<string>("");
 
+  // Fetch langars data
+  useEffect(() => {
+    const fetchLangars = async () => {
+      try {
+        const response = await axios.get("/api/langar");
+        setLangars(response.data.data);
+      } catch (error: any) {
+        const errorMessage = error.response
+          ? error.response.data.message
+          : error.message;
+        console.error("Error fetching langars:", errorMessage);
+      }
+    };
+
+    fetchLangars();
+  }, []);
+
+  // Filter langars based on state and district
   const filtered = langars.filter((langar) => {
     const matchesState = !state || langar.state === state;
     const matchesDistrict = !district || langar.district === district;
     return matchesState && matchesDistrict;
   });
 
-  const handleState = (event:any) => {
+  const handleState = (event: any) => {
     setState(event.target.value as string);
-    setDistrict(""); // Reset district when state changes
+    setDistrict("");
   };
 
-  const handleDistrict = (event:any) => {
+  const handleDistrict = (event: any) => {
     setDistrict(event.target.value as string);
   };
 
+  // Delete outdated data and images
   useEffect(() => {
     const deleteData = async () => {
       try {
@@ -153,48 +170,22 @@ const Details: React.FC<LangarProps> = ({ langars }) => {
                       <strong>Timing:</strong> {item.time}
                     </h6>
                     <h6>
-                      <strong>Roti:</strong>{" "}
-                      {item.roti && item.puri
-                        ? "Roti, Puri"
-                        : item.roti
-                        ? "Roti"
-                        : "Puri"}
+                      <strong>Roti:</strong> {item.roti ? "Yes" : "No"}
                     </h6>
                     <h6>
-                      <strong>Chawal:</strong>{" "}
-                      {item.chawal && item.biryani
-                        ? "Chawal, Biryani"
-                        : item.chawal
-                        ? "Chawal"
-                        : "Biryani"}
+                      <strong>Chawal:</strong> {item.chawal ? "Yes" : "No"}
                     </h6>
                     <h6>
-                      <strong>Daal:</strong>{" "}
-                      {item.dal && item.kadi
-                        ? "Daal, Kadhi"
-                        : item.dal
-                        ? "Daal"
-                        : "Kadhi"}
+                      <strong>Daal:</strong> {item.dal ? "Yes" : "No"}
                     </h6>
                     <h6>
                       <strong>Sabji:</strong>{" "}
-                      {[
-                        item.chhole && "Chhole",
-                        item.kaddu && "Kaddu",
-                        item.paneer && "Paneer",
-                        item.gobhi && "Mix Veg",
-                        item.aloo && "Aloo",
-                      ]
+                      {[item.chhole && "Chhole", item.paneer && "Paneer"]
                         .filter(Boolean)
-                        .join(", ") || "Chhole"}
+                        .join(", ") || "None"}
                     </h6>
                     <h6>
-                      <strong>Sweet:</strong>{" "}
-                      {item.halwa && item.kheer
-                        ? "Halwa, Kheer"
-                        : item.halwa
-                        ? "Halwa"
-                        : "Kheer"}
+                      <strong>Sweet:</strong> {item.halwa ? "Yes" : "No"}
                     </h6>
                   </div>
                 </div>
