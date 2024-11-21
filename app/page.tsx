@@ -1,30 +1,29 @@
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import getLangar from "@/actions/getLangar";
 import Details from "@/components/Details";
 import { NextPage } from "next";
-const Home:NextPage = async () => {
-  const langars = await getLangar();
+
+const Home: NextPage = async () => {
+  let langars = [];
+
+  try {
+    langars = await getLangar();
+  } catch (error) {
+    console.error("Error fetching langars:", error);
+  }
+
   return (
-    <div className="">
+    <div>
       <Container fluid>
-        {/* <Row>
+        <Row className="justify-content-center">
           <Col md={12}>
-            <TopCarousel />
+            <header aria-label="Bhandara location">
+              <h4 className="text-center my-4 fw-semibold">Bhandara Location</h4>
+            </header>
           </Col>
-        </Row> */}
-        <Row>
-          <Col md={12}>
-            <div>
-              <h4 className="text-center my-4 fw-semibold">
-                Bhandara Location
-              </h4>
-            </div>
-          </Col>
-          {/* <Col>
-          <LocationComponent />
-          </Col> */}
         </Row>
       </Container>
+
       <Container fluid>
         <Row>
           <Col md={12}>
@@ -35,4 +34,5 @@ const Home:NextPage = async () => {
     </div>
   );
 };
+
 export default Home;
