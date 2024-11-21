@@ -124,13 +124,13 @@ const Details = () => {
                 onChange={handleDistrict}
                 label="District"
               >
-                {DistrictState.find((item) => item.state === state)?.districts.map(
-                  (data) => (
-                    <MenuItem value={data} key={data}>
-                      {data}
-                    </MenuItem>
-                  )
-                )}
+                {DistrictState.find(
+                  (item) => item.state === state
+                )?.districts.map((data) => (
+                  <MenuItem value={data} key={data}>
+                    {data}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Col>
@@ -154,38 +154,80 @@ const Details = () => {
                       alt={item.name}
                       width={400}
                       height={400}
-                      className="py-3 object-cover"
+                      className=" py-3 object-cover"
                       fluid
                     />
                   </div>
                   <div className="my-2">
                     <h6>
-                      <strong>Bhandara Name:</strong> {item.name}
+                      <span className="fw-semibold"> Bhandara Name : </span>
+                      {item.name}
                     </h6>
                     <h6>
-                      <strong>Address:</strong> {item.address}, {item.district},{" "}
-                      {item.state}, {item.pincode}
+                      <span className="fw-semibold">Address :</span>{" "}
+                      {item.address}, {item.district}, {item.state},
+                      {item.pincode}
                     </h6>
                     <h6>
-                      <strong>Timing:</strong> {item.time}
+                      <span className="fw-semibold"> Timing : </span>
+                      {item.time}
                     </h6>
                     <h6>
-                      <strong>Roti:</strong> {item.roti ? "Yes" : "No"}
+                      <span className="fw-semibold"> Roti : </span>
+                      {item.roti && item.puri
+                        ? "Roti, Puri"
+                        : item.roti
+                        ? "Roti"
+                        : item.puri
+                        ? "Puri"
+                        : "Roti"}
                     </h6>
                     <h6>
-                      <strong>Chawal:</strong> {item.chawal ? "Yes" : "No"}
+                      <span className="fw-semibold"> Chawal : </span>
+                      {item.chawal && item.biryani
+                        ? "Chawal, Biryani"
+                        : item.chawal
+                        ? "Chawal"
+                        : item.biryani
+                        ? "Biryani"
+                        : "Chawal"}
                     </h6>
                     <h6>
-                      <strong>Daal:</strong> {item.dal ? "Yes" : "No"}
+                      <span className="fw-semibold">Daal : </span>
+                      {item.dal && item.kadi
+                        ? "Daal, Kadhi"
+                        : item.dal
+                        ? "Daal"
+                        : item.kadi
+                        ? "Kadhi"
+                        : "Kadhi"}
                     </h6>
+
                     <h6>
-                      <strong>Sabji:</strong>{" "}
-                      {[item.chhole && "Chhole", item.paneer && "Paneer"]
+                      <span className="fw-semibold">Sabji : </span>
+                      {[
+                        item.chhole && "Chhole",
+                        item.kaddu && "Kaddu",
+                        item.paneer && "Paneer",
+                        item.gobhi && "Mix Veg",
+                        item.aloo && "Aloo",
+                      ]
                         .filter(Boolean)
-                        .join(", ") || "None"}
+                        .map((sabji, index, arr) =>
+                          index === arr.length - 1 ? sabji : `${sabji}, `
+                        )
+                        .join("") || "Chhole"}
                     </h6>
+
                     <h6>
-                      <strong>Sweet:</strong> {item.halwa ? "Yes" : "No"}
+                      <span className="fw-semibold"> Sweet : </span>
+                      {item.halwa && item.kheer
+                        ? "Halwa, Kheer"
+                        : item.halwa
+                        ? "Halwa"
+                        : item.kheer
+                        ? "Kheer"
+                        : "Halwa"}
                     </h6>
                   </div>
                 </div>
