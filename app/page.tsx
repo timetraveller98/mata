@@ -1,7 +1,8 @@
 import { Container, Row, Col, Image } from "react-bootstrap";
 import getLangar from "@/actions/getLangar";
-import Details from "@/components/Home";
-const Home = async () => {
+import Details from "@/components/Details";
+import { NextPage } from "next";
+const Home:NextPage = async () => {
   const langars = await getLangar();
   return (
     <div className="">
