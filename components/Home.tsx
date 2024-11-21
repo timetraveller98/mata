@@ -27,7 +27,7 @@ const Details= ({ langars }:any) => {
   useEffect(() => {
     const deleteData = async () => {
       try {
-        const res = await fetch("/api/langar", { method: "DELETE" });
+        const res = await fetch("/api/remove", { method: "DELETE" });
         await res.json();
       } catch (error) {
         console.error("Failed to delete data:", error);
